@@ -8,6 +8,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xff045183)
+      ),
       debugShowCheckedModeBanner: false,
       home: Home(),
     );
@@ -21,6 +24,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
+  initAuth()async{
+    await JumioMobileSDK.initAuthentication("38ab59d7-2405-4828-bee2-952bdc73012a", "V6Alx9z6ex5rl86dISCO9hJZoDfTyyK2", "US", {
+      "enrollmentTransactionReference": "086f0d32-9f69-4924-9031-7b7ab55d22b7",
+      //"userReference": "UserReference",
+      //"callbackUrl": "URL",
+      //"authenticationTransactionReference": "AuthenticationTransactionReference",
+    },
+        {
+          "positiveButtonBackgroundColor":"#045183",
+          "negativeButtonBorderColor" :"#045183",
+          "foregroundColor":"#045183",
+          "scanOverlayBorderColor":"#045183",
+          "scanOverlayValidColor":"#045183",
+          "scanOverlayInnalidColor":"#045183",
+          "scanOverlayStandardColor":"#045183",
+        }
+    );
+  }
+
   jumioInit() {
 
     debugPrint("JumioINIT PRESSED");
@@ -30,10 +53,13 @@ class _HomeState extends State<Home> {
       "cameraPosition": "back",
       "documentTypes": ["DRIVER_LICENSE", "PASSPORT", "IDENTITY_CARD", "VISA"],
     }, {
-      "documentSelectionHeaderBackgroundColor":"#045183",
       "positiveButtonBackgroundColor":"#045183",
       "negativeButtonBorderColor" :"#045183",
-      "disableBlur": true,
+      "foregroundColor":"#045183",
+      "scanOverlayBorderColor":"#045183",
+      "scanOverlayValidColor":"#045183",
+      "scanOverlayInnalidColor":"#045183",
+      "scanOverlayStandardColor":"#045183",
     }
     );
     
@@ -47,6 +73,7 @@ class _HomeState extends State<Home> {
 //    private String apiSecret = "V6Alx9z6ex5rl86dISCO9hJZoDfTyyK2";
 
     jumioInit();
+    initAuth();
     // TODO: implement initState
     super.initState();
   }
@@ -55,17 +82,29 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: RaisedButton(
-          onPressed: ()async{
-            Map<dynamic,dynamic>data =   await JumioMobileSDK.startNetverify();
-            debugPrint("JUMIODATA $data");
-          },
-          child: Text("Netverify"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RaisedButton(
+              onPressed: ()async{
+                Map<dynamic,dynamic>data =   await JumioMobileSDK.startNetverify();
+                debugPrint("JUMIODATA : NETVERITY $data");
+              },
+              child: Text("Netverify"),
+            ),
+            RaisedButton(
+              onPressed: ()async{
+                Map<dynamic,dynamic>data =   await JumioMobileSDK.startAuthentication();
+                debugPrint("JUMIODATA : AUTH $data");
+              },
+              child: Text("Authentication"),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          jumioInit();
+          initAuth();
         },
         child: Icon(Icons.refresh),
       ),

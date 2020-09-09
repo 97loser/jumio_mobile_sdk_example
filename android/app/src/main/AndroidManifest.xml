@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.loser.jumio_flutter_demo">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -42,8 +43,15 @@
 
         <activity
             android:name="com.jumio.nv.NetverifyActivity"
+            tools:replace="android:theme"
             android:hardwareAccelerated="true"
             android:theme="@style/CustomNetverifyTheme"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.jumio.auth.AuthenticationActivity"
+            tools:replace="android:theme"
+            android:hardwareAccelerated="true"
+            android:theme="@style/CustomAuthenticationTheme"
             android:windowSoftInputMode="adjustResize"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
